@@ -5,6 +5,7 @@
 #include <algorithm>    // std::shuffle
 #include <random>       // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
+#include <unistd.h>     // sleep
 
 class CryptographicApp
 {
@@ -39,11 +40,15 @@ public:
 
     char encrypt(char letter)
     {
+        std::cout << letter << " ->    " << mapEncrypt_[letter] << std::endl;
+        sleep(1);
         return mapEncrypt_[letter];
     }
 
     char decrypt(char letter)
     {
+        std::cout << letter << " ->    " << mapDecrypt_[letter] << std::endl;
+        sleep(1);
         return mapDecrypt_[letter];
     }
 };
