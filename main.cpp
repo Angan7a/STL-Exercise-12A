@@ -37,26 +37,14 @@ public:
                        });
     }
 
-    std::string encrypte(std::string message)
+    char encrypt(char letter)
     {
-        std::string encryptedMessage;
-        std::transform(begin(message), end(message),
-                       std::back_inserter(encryptedMessage),
-                       [=](char letter) {
-                            return mapEncrypt_[letter];
-                       });
-        return encryptedMessage;
+        return mapEncrypt_[letter];
     }
 
-    std::string decrypte(std::string encryptedMessage)
+    char decrypt(char letter)
     {
-        std::string decrypteddMessage;
-        std::transform(begin(encryptedMessage), end(encryptedMessage),
-                       std::back_inserter(decrypteddMessage),
-                       [=](char letter) {
-                            return mapDecrypt_[letter];
-                       });
-        return decrypteddMessage;
+        return mapDecrypt_[letter];
     }
 };
 
@@ -69,9 +57,17 @@ int main()
 
     std::cout << "Enter message to encrypted: ";
     std::getline(std::cin, message);
-    encryptedMessage = cryptographicApp.encrypte(message);
+    std::transform(begin(message), end(message),
+                   std::back_inserter(encryptedMessage),
+                   [& cryptographicApp](char letter){
+                        return cryptographicApp.encrypt(letter);
+                   });
     std::cout << "Encrypted message: " << encryptedMessage << std::endl;
-    decryptedMessage = cryptographicApp.decrypte(encryptedMessage);
+    std::transform(begin(encryptedMessage), end(encryptedMessage),
+                   std::back_inserter(decryptedMessage),
+                   [& cryptographicApp](char letter){
+                        return cryptographicApp.decrypt(letter);
+                   });
     std::cout << "Decrypted message: " << decryptedMessage << std::endl;
 
     return 0;
